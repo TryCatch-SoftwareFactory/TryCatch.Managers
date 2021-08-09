@@ -1,0 +1,5 @@
+root = false
+[*.cs]
+
+# CA1707: Los identificadores no deben contener caracteres de subrayado
+dotnet_diagnostic.CA1707.severity = none
