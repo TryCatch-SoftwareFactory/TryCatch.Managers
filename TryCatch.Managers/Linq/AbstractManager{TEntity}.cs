@@ -27,7 +27,7 @@ namespace TryCatch.Managers.Linq
         /// <param name="repository">Specification repository reference.</param>
         /// <param name="validatorsFactory">Validators factory reference.</param>
         /// <param name="resultBuilderFactory">Result builder factory reference.</param>
-        /// <param name="specFactory">Specification factory reference.</param>
+        /// <param name="expressionFactory">Specification factory reference.</param>
         protected AbstractManager(
             ILinqRepository<TEntity> repository,
             IEntityValidatorsFactory validatorsFactory,

@@ -31,10 +31,10 @@ namespace TryCatch.Managers.UnitTests.Mocks.Specs
 
         public Expression<Func<Train, object>> AsExpression() =>
             this.fieldName switch
-                {
-                    "ID" => (x) => x.Id,
-                    _ => (x) => x.Reference,
-                };
+            {
+                "ID" => (x) => x.Id,
+                _ => (x) => x.Reference,
+            };
 
         public bool IsAscending() => this.sortAsAscending;
     }

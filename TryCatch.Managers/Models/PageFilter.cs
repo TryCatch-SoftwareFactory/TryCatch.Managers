@@ -12,6 +12,9 @@ namespace TryCatch.Managers.Models
     {
         private string sortAs;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PageFilter"/> class.
+        /// </summary>
         public PageFilter()
         {
             this.sortAs = string.Empty;
