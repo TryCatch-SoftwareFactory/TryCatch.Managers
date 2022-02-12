@@ -11,10 +11,8 @@ namespace TryCatch.Managers.UnitTests.Mocks
     {
         public IOpResultBuilder GetOperationResultBuilder() => new OpResultBuilder();
 
-        public IPageResultBuilder<TEntity> GetPageResultBuilder<TEntity>()
-            where TEntity : class => new PageResultBuilder<TEntity>();
+        public IPageResultBuilder<TEntity> GetPageResultBuilder<TEntity>() => new PageResultBuilder<TEntity>();
 
-        public IResultBuilder<TPayload> GetPayloadResultBuilder<TPayload>()
-            where TPayload : class => new ResultBuilder<TPayload>();
+        public IResultBuilder<TPayload> GetPayloadResultBuilder<TPayload>() => new ResultBuilder<TPayload>();
     }
 }
