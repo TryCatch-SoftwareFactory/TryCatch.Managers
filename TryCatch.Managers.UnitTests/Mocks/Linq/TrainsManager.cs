@@ -7,13 +7,13 @@ namespace TryCatch.Managers.UnitTests.Mocks.Linq
 {
     using TryCatch.Managers.Linq;
     using TryCatch.Managers.Validators;
-    using TryCatch.Patterns.Repositories;
+    using TryCatch.Patterns.Repositories.Linq;
     using TryCatch.Patterns.Results;
 
     public class TrainsManager : AbstractManager<Train>
     {
         public TrainsManager(
-            ILinqRepository<Train> repository,
+            IRepository<Train> repository,
             IEntityValidatorsFactory validatorsFactory,
             IResultBuilderFactory resultBuilderFactory,
             IExpressionFactory<Train> expressionFactory)

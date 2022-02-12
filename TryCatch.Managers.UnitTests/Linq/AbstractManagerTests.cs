@@ -12,17 +12,17 @@ namespace TryCatch.Managers.UnitTests.Linq
     using FluentAssertions;
     using NSubstitute;
     using TryCatch.Managers.Linq;
-    using TryCatch.Managers.Models;
     using TryCatch.Managers.UnitTests.Mocks;
     using TryCatch.Managers.UnitTests.Mocks.Linq;
     using TryCatch.Managers.Validators;
-    using TryCatch.Patterns.Repositories;
+    using TryCatch.Models;
+    using TryCatch.Patterns.Repositories.Linq;
     using TryCatch.Patterns.Results;
     using Xunit;
 
     public class AbstractManagerTests
     {
-        private readonly ILinqRepository<Train> repository;
+        private readonly IRepository<Train> repository;
 
         private readonly IEntityValidatorsFactory validatorsFactory;
 
@@ -34,7 +34,7 @@ namespace TryCatch.Managers.UnitTests.Linq
 
         public AbstractManagerTests()
         {
-            this.repository = Substitute.For<ILinqRepository<Train>>();
+            this.repository = Substitute.For<IRepository<Train>>();
             this.validatorsFactory = Substitute.For<IEntityValidatorsFactory>();
             this.resultBuilderFactory = Given.GetBuilder;
             this.expressionFactory = Substitute.For<IExpressionFactory<Train>>();
@@ -49,7 +49,7 @@ namespace TryCatch.Managers.UnitTests.Linq
         public void Construct_without_repository()
         {
             // Arrange
-            ILinqRepository<Train> repository = null;
+            IRepository<Train> repository = null;
 
             // Act
             Action act = () => _ = new TrainsManager(
@@ -148,7 +148,7 @@ namespace TryCatch.Managers.UnitTests.Linq
             var entity = EntityFactory.Get<Train>();
 
             this.repository
-                .AddAsync(Arg.Any<Train>(), Arg.Any<CancellationToken>())
+                .CreateAsync(Arg.Any<Train>(), Arg.Any<CancellationToken>())
                 .Returns(true);
 
             // Act
@@ -161,7 +161,7 @@ namespace TryCatch.Managers.UnitTests.Linq
 
             await this.repository
                 .Received(1)
-                .AddAsync(Arg.Any<Train>(), Arg.Any<CancellationToken>())
+                .CreateAsync(Arg.Any<Train>(), Arg.Any<CancellationToken>())
                 .ConfigureAwait(false);
         }
 
@@ -333,7 +333,7 @@ namespace TryCatch.Managers.UnitTests.Linq
         public async void GetPage_without_filter()
         {
             // Arrange
-            PageFilter pageFilter = null;
+            PageModel pageFilter = null;
 
             // Act
             Func<Task> act = async () => await this.sut.GetPage(pageFilter).ConfigureAwait(false);
@@ -349,12 +349,12 @@ namespace TryCatch.Managers.UnitTests.Linq
             const long Total = 100L;
             const long Matched = 0L;
 
-            var pageFilter = EntityFactory.Get<PageFilter>();
+            var pageFilter = EntityFactory.Get<PageModel>();
             var entities = EntityFactory.Get<Train>(10);
 
             this.expressionFactory.GetDefaultSpec().Returns((x) => true);
-            this.expressionFactory.GetPageSpec(Arg.Any<PageFilter>()).Returns((x) => true);
-            this.expressionFactory.GetOrderSpec(Arg.Any<PageFilter>()).Returns((x) => true);
+            this.expressionFactory.GetPageSpec(Arg.Any<PageModel>()).Returns((x) => true);
+            this.expressionFactory.GetOrderSpec(Arg.Any<PageModel>()).Returns((x) => true);
             this.repository.GetCountAsync(Arg.Any<Expression<Func<Train, bool>>>()).Returns(Total);
             this.repository.GetCountAsync(Arg.Any<Expression<Func<Train, bool>>>()).Returns(Matched);
             this.repository
@@ -369,8 +369,8 @@ namespace TryCatch.Managers.UnitTests.Linq
             actual.Items.Should().BeEquivalentTo(entities);
 
             this.expressionFactory.Received(1).GetDefaultSpec();
-            this.expressionFactory.Received(1).GetPageSpec(Arg.Any<PageFilter>());
-            this.expressionFactory.Received(1).GetOrderSpec(Arg.Any<PageFilter>());
+            this.expressionFactory.Received(1).GetPageSpec(Arg.Any<PageModel>());
+            this.expressionFactory.Received(1).GetOrderSpec(Arg.Any<PageModel>());
 
             await this.repository
                 .Received(2)

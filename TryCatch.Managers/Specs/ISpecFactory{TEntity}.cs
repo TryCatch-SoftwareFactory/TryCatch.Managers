@@ -5,7 +5,7 @@
 
 namespace TryCatch.Managers.Specs
 {
-    using TryCatch.Managers.Models;
+    using TryCatch.Models;
     using TryCatch.Patterns.Specifications;
 
     /// <summary>
@@ -13,7 +13,6 @@ namespace TryCatch.Managers.Specs
     /// </summary>
     /// <typeparam name="TEntity">Type of entity used on the repository.</typeparam>
     public interface ISpecFactory<TEntity>
-        where TEntity : class
     {
         /// <summary>
         /// Gets the default specification for lists or queries.
@@ -40,13 +39,13 @@ namespace TryCatch.Managers.Specs
         /// </summary>
         /// <param name="pageFilter">Query data filter.</param>
         /// <returns>Spec for the query.</returns>
-        ISpecification<TEntity> GetPageSpec(PageFilter pageFilter);
+        ISpecification<TEntity> GetPageSpec(PageModel pageFilter);
 
         /// <summary>
         /// Gets the "sort as" spec for any list type query.
         /// </summary>
         /// <param name="pageFilter">Query data filter.</param>
         /// <returns>Sort spec for the query.</returns>
-        ISortSpecification<TEntity> GetOrderSpec(PageFilter pageFilter);
+        ISortSpecification<TEntity> GetOrderSpec(PageModel pageFilter);
     }
 }

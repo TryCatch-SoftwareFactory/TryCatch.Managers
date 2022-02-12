@@ -7,7 +7,7 @@ namespace TryCatch.Managers
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using TryCatch.Managers.Models;
+    using TryCatch.Models;
     using TryCatch.Patterns.Results;
 
     /// <summary>
@@ -15,7 +15,6 @@ namespace TryCatch.Managers
     /// </summary>
     /// <typeparam name="TEntity">Type of root entity.</typeparam>
     public interface IEntityManager<TEntity>
-        where TEntity : class
     {
         /// <summary>
         /// Allows creating a new entity on the system.
@@ -39,7 +38,7 @@ namespace TryCatch.Managers
         /// <param name="pageFilter">the paging filter.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Page of results.</returns>
-        Task<PageResult<TEntity>> GetPage(PageFilter pageFilter, CancellationToken cancellationToken = default);
+        Task<PageResult<TEntity>> GetPage(PageModel pageFilter, CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Allows reading an existing entity.

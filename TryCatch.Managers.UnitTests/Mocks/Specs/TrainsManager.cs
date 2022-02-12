@@ -7,13 +7,13 @@ namespace TryCatch.Managers.UnitTests.Mocks.Specs
 {
     using TryCatch.Managers.Specs;
     using TryCatch.Managers.Validators;
-    using TryCatch.Patterns.Repositories;
+    using TryCatch.Patterns.Repositories.Spec;
     using TryCatch.Patterns.Results;
 
     public class TrainsManager : AbstractManager<Train>
     {
         public TrainsManager(
-            ISpecRepository<Train> repository,
+            IRepository<Train> repository,
             IEntityValidatorsFactory validatorsFactory,
             IResultBuilderFactory resultBuilderFactory,
             ISpecFactory<Train> specFactory)

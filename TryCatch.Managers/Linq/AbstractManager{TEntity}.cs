@@ -8,9 +8,9 @@ namespace TryCatch.Managers.Linq
     using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using TryCatch.Managers.Models;
     using TryCatch.Managers.Validators;
-    using TryCatch.Patterns.Repositories;
+    using TryCatch.Models;
+    using TryCatch.Patterns.Repositories.Linq;
     using TryCatch.Patterns.Results;
     using TryCatch.Validators;
 
@@ -19,7 +19,6 @@ namespace TryCatch.Managers.Linq
     /// </summary>
     /// <typeparam name="TEntity">Type of root entity.</typeparam>
     public abstract class AbstractManager<TEntity> : IEntityManager<TEntity>
-        where TEntity : class
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AbstractManager{TEntity}"/> class.
@@ -29,7 +28,7 @@ namespace TryCatch.Managers.Linq
         /// <param name="resultBuilderFactory">Result builder factory reference.</param>
         /// <param name="expressionFactory">Specification factory reference.</param>
         protected AbstractManager(
-            ILinqRepository<TEntity> repository,
+            IRepository<TEntity> repository,
             IEntityValidatorsFactory validatorsFactory,
             IResultBuilderFactory resultBuilderFactory,
             IExpressionFactory<TEntity> expressionFactory)
@@ -43,7 +42,7 @@ namespace TryCatch.Managers.Linq
         /// <summary>
         /// Gets the repository reference.
         /// </summary>
-        protected ILinqRepository<TEntity> Repository { get; }
+        protected IRepository<TEntity> Repository { get; }
 
         /// <summary>
         /// Gets the validator factory reference.
@@ -73,7 +72,7 @@ namespace TryCatch.Managers.Linq
                 .ConfigureAwait(false);
 
             var result = await this.Repository
-                .AddAsync(entity, cancellationToken)
+                .CreateAsync(entity, cancellationToken)
                 .ConfigureAwait(false);
 
             var message = result ? string.Empty : "Something was wrong with the creation";
@@ -99,14 +98,14 @@ namespace TryCatch.Managers.Linq
                 .GetAsync(spec, cancellationToken)
                 .ConfigureAwait(false);
 
-            var message = foundedEntity is default(TEntity) ? "Entity not found!" : string.Empty;
+            var message = foundedEntity is null ? "Entity not found!" : string.Empty;
 
             var builder = this.ResultBuilderFactory
                 .GetPayloadResultBuilder<TEntity>()
                 .Build()
                 .WithError(message);
 
-            return foundedEntity is default(TEntity)
+            return foundedEntity is null
                 ? builder.Create()
                 : builder.WithPayload(foundedEntity).Create();
         }
@@ -120,7 +119,7 @@ namespace TryCatch.Managers.Linq
 
             await this.ValidatorsFactory
                 .GetUpdateValidator()
-                .ValidateAsync(entity, cancellationToken)
+                .ValidateAndThrowIfErrorAsync(entity, cancellationToken)
                 .ConfigureAwait(false);
 
             var result = await this.Repository
@@ -157,7 +156,7 @@ namespace TryCatch.Managers.Linq
         }
 
         /// <inheritdoc/>
-        public async virtual Task<PageResult<TEntity>> GetPage(PageFilter pageFilter, CancellationToken cancellationToken = default)
+        public async virtual Task<PageResult<TEntity>> GetPage(PageModel pageFilter, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
