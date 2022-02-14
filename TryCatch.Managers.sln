@@ -13,9 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		stylecop.json = stylecop.json
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TryCatch.Managers", "TryCatch.Managers\TryCatch.Managers.csproj", "{290BD1D1-70EF-4244-8439-5F952404B5ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TryCatch.Managers", "src\TryCatch.Managers\TryCatch.Managers.csproj", "{290BD1D1-70EF-4244-8439-5F952404B5ED}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TryCatch.Managers.UnitTests", "TryCatch.Managers.UnitTests\TryCatch.Managers.UnitTests.csproj", "{C2A713F3-4192-4332-96D6-966897CA9E89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TryCatch.Managers.UnitTests", "tests\TryCatch.Managers.UnitTests\TryCatch.Managers.UnitTests.csproj", "{C2A713F3-4192-4332-96D6-966897CA9E89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
