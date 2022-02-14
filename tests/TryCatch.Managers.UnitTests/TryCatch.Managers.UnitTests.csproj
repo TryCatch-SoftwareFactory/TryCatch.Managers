@@ -37,19 +37,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+    <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TryCatch.Managers\TryCatch.Managers.csproj" />
+    <ProjectReference Include="..\..\src\TryCatch.Managers\TryCatch.Managers.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <EditorConfigFiles Remove="C:\Users\asegu\source\repos\Examples\CQRS\TryCatch.Managers.UnitTests\.editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="C:\Users\asegu\source\repos\Examples\CQRS\TryCatch.Managers.UnitTests\.editorconfig" />
-  </ItemGroup>
-
+  
 </Project>
